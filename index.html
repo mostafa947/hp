@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Our Little World 💕</title>
+  <meta name="description" content="A private, romantic space just for the two of us." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ======================== FLOATING PARTICLES ======================== -->
+  <div id="particles-container" aria-hidden="true"></div>
+
+  <!-- ======================== SCREEN 1: PASSWORD ======================== -->
+  <section id="screen-password" class="screen active" aria-label="Password entry">
+    <div class="password-card">
+      <div class="lock-icon" aria-hidden="true">🔐</div>
+      <h1 class="brand-title">Our Little World</h1>
+      <p class="brand-subtitle">A secret space, just for us ✨</p>
+      <div class="input-wrapper">
+        <input
+          type="password"
+          id="password-input"
+          class="password-input"
+          placeholder="Enter our secret code…"
+          autocomplete="off"
+          aria-label="Secret code"
+          maxlength="30"
+        />
+        <button id="password-btn" class="btn-primary" aria-label="Unlock">
+          <span>Unlock</span>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M12 2a7 7 0 0 1 7 7v2h1a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h1V9a7 7 0 0 1 7-7Zm0 2a5 5 0 0 0-5 5v2h10V9a5 5 0 0 0-5-5Zm0 9a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z"/></svg>
+        </button>
+      </div>
+      <p id="password-error" class="error-msg" role="alert" aria-live="polite"></p>
+    </div>
+  </section>
+
+  <!-- ======================== SCREEN 2: HEART GATE ======================== -->
+  <section id="screen-heart" class="screen" aria-label="Heart gate animation">
+    <p class="heart-hint">Click the heart to open our world 💫</p>
+    <button id="heart-btn" class="heart-gate" aria-label="Open our world">
+      <svg id="heart-svg" viewBox="0 0 200 180" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <!-- Left half -->
+        <path id="heart-left" d="M100 160 C60 130, 10 100, 10 60 A40 40 0 0 1 100 50 Z" fill="url(#heartGrad)"/>
+        <!-- Right half -->
+        <path id="heart-right" d="M100 160 C140 130, 190 100, 190 60 A40 40 0 0 0 100 50 Z" fill="url(#heartGrad)"/>
+        <!-- Shine overlay -->
+        <ellipse id="heart-shine" cx="75" cy="65" rx="22" ry="14" fill="rgba(255,255,255,0.22)" transform="rotate(-30 75 65)"/>
+        <defs>
+          <radialGradient id="heartGrad" cx="50%" cy="35%" r="65%">
+            <stop offset="0%" stop-color="#ff8fb1"/>
+            <stop offset="60%" stop-color="#e8365d"/>
+            <stop offset="100%" stop-color="#a8003a"/>
+          </radialGradient>
+        </defs>
+      </svg>
+      <!-- Burst particles spawned by JS -->
+    </button>
+    <div id="heart-sparks" aria-hidden="true"></div>
+  </section>
+
+  <!-- ======================== SCREEN 3: DASHBOARD ======================== -->
+  <section id="screen-dashboard" class="screen" aria-label="Our romantic dashboard">
+
+    <!-- NAVBAR -->
+    <nav class="nav-bar">
+      <span class="nav-brand">Our Little World 💕</span>
+    </nav>
+
+    <!-- HERO HEADING -->
+    <header class="dash-hero">
+      <h2 class="dash-title">Every moment with you is a gift 🌹</h2>
+    </header>
+
+    <!-- TIMERS -->
+    <div class="section-container">
+      <h3 class="section-label">⏳ Our Special Days</h3>
+      <div class="timers-grid">
+
+        <div class="timer-card timer-card--met">
+          <div class="timer-icon">🌸</div>
+          <h4 class="timer-title">The Day We Met</h4>
+          <p class="timer-date">July 21, 2026</p>
+          <div class="timer-display" id="timer-met" aria-live="polite" aria-label="Time since we met">
+            <span class="t-unit" id="met-d">00</span><span class="t-label">days</span>
+            <span class="t-unit" id="met-h">00</span><span class="t-label">hrs</span>
+            <span class="t-unit" id="met-m">00</span><span class="t-label">min</span>
+            <span class="t-unit" id="met-s">00</span><span class="t-label">sec</span>
+          </div>
+        </div>
+
+        <div class="timer-card timer-card--love">
+          <div class="timer-icon">💖</div>
+          <h4 class="timer-title">The Day We Fell in Love</h4>
+          <p class="timer-date">August 17, 2026</p>
+          <div class="timer-display" id="timer-love" aria-live="polite" aria-label="Time since we fell in love">
+            <span class="t-unit" id="love-d">00</span><span class="t-label">days</span>
+            <span class="t-unit" id="love-h">00</span><span class="t-label">hrs</span>
+            <span class="t-unit" id="love-m">00</span><span class="t-label">min</span>
+            <span class="t-unit" id="love-s">00</span><span class="t-label">sec</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- PHOTO GALLERY -->
+    <div class="section-container">
+      <h3 class="section-label">📸 Our Gallery</h3>
+      <div id="gallery-grid" class="gallery-grid" role="list" aria-label="Photo gallery">
+        <div class="gallery-empty" id="gallery-empty">
+          <span>📷</span>
+          <p>No memories yet — upload your first photo!</p>
+        </div>
+      </div>
+      <button id="upload-btn" class="fab" aria-label="Upload a new photo" title="Add photo">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="28" height="28"><path d="M12 5a1 1 0 0 1 1 1v5h5a1 1 0 1 1 0 2h-5v5a1 1 0 1 1-2 0v-5H6a1 1 0 1 1 0-2h5V6a1 1 0 0 1 1-1Z"/></svg>
+      </button>
+      <input type="file" id="file-input" accept="image/*" multiple hidden aria-label="Select photos" />
+    </div>
+
+    <!-- LOVE NOTES -->
+    <div class="section-container notes-section">
+      <h3 class="section-label">💌 Love Notes</h3>
+      <div class="note-composer">
+        <textarea
+          id="note-text"
+          class="note-textarea"
+          placeholder="Write something from your heart…"
+          rows="3"
+          maxlength="500"
+          aria-label="Write a love note"
+        ></textarea>
+        <div class="note-composer-footer">
+          <span id="note-char-count" class="char-count">0 / 500</span>
+          <button id="note-btn" class="btn-primary btn-sm" aria-label="Post love note">
+            Post 💌
+          </button>
+        </div>
+      </div>
+      <div id="notes-list" class="notes-list" role="list" aria-label="Love notes">
+        <div class="notes-loading" id="notes-loading">Loading notes… 💕</div>
+      </div>
+    </div>
+
+    <footer class="dash-footer">Made with 💖 just for us · <span id="footer-year"></span></footer>
+
+  </section>
+
+  <!-- ======================== SCRIPTS ======================== -->
+  <!-- Firebase v9+ modular SDK via CDN -->
+  <script type="module">
+    // ──────────────────────────────────────────────────────────────────────
+    // ⚠️  REPLACE THIS CONFIG with your own Firebase project credentials
+    //     https://console.firebase.google.com → Project Settings → Your apps
+    // ──────────────────────────────────────────────────────────────────────
+    const firebaseConfig = {
+      apiKey:            "YOUR_API_KEY",
+      authDomain:        "YOUR_PROJECT_ID.firebaseapp.com",
+      projectId:         "YOUR_PROJECT_ID",
+      storageBucket:     "YOUR_PROJECT_ID.appspot.com",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId:             "YOUR_APP_ID"
+    };
+
+    // ── Firebase Imports ───────────────────────────────────────────────────
+    import { initializeApp }                            from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getFirestore, collection, addDoc,
+             onSnapshot, serverTimestamp,
+             query, orderBy }                          from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    import { getStorage, ref as storageRef,
+             uploadBytesResumable, getDownloadURL }    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+
+    // ── Initialise Firebase ────────────────────────────────────────────────
+    let app, db, storage;
+    let firebaseReady = false;
+
+    try {
+      app     = initializeApp(firebaseConfig);
+      db      = getFirestore(app);
+      storage = getStorage(app);
+      firebaseReady = true;
+    } catch (e) {
+      console.warn("Firebase not configured — running in demo mode.", e.message);
+    }
+
+    // ══════════════════════════════════════════════════════════════════════
+    //  PASSWORD
+    // ══════════════════════════════════════════════════════════════════════
+    const SECRET_PASSWORD = "iloveyou"; // ← change this
+
+    const screenPwd   = document.getElementById("screen-password");
+    const screenHeart = document.getElementById("screen-heart");
+    const screenDash  = document.getElementById("screen-dashboard");
+    const pwdInput    = document.getElementById("password-input");
+    const pwdBtn      = document.getElementById("password-btn");
+    const pwdError    = document.getElementById("password-error");
+
+    function showScreen(el) {
+      document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+      el.classList.add("active");
+    }
+
+    function checkPassword() {
+      const val = pwdInput.value.trim();
+      if (val === SECRET_PASSWORD) {
+        screenPwd.classList.add("fade-exit");
+        setTimeout(() => showScreen(screenHeart), 500);
+      } else {
+        pwdError.textContent = "Hmm, that doesn't seem right… try again 💔";
+        pwdInput.classList.add("shake");
+        setTimeout(() => {
+          pwdInput.classList.remove("shake");
+          pwdError.textContent = "";
+        }, 800);
+      }
+    }
+
+    pwdBtn.addEventListener("click", checkPassword);
+    pwdInput.addEventListener("keydown", e => { if (e.key === "Enter") checkPassword(); });
+
+    // ══════════════════════════════════════════════════════════════════════
+    //  HEART GATE
+    // ══════════════════════════════════════════════════════════════════════
+    const heartBtn  = document.getElementById("heart-btn");
+    const heartSVG  = document.getElementById("heart-svg");
+    const sparksDiv = document.getElementById("heart-sparks");
+
+    function spawnSparks() {
+      const colours = ["#ff8fb1","#e8365d","#ffd6e7","#ff6b9d","#ffb3cc","#fff0f5"];
+      for (let i = 0; i < 30; i++) {
+        const s = document.createElement("span");
+        s.className = "spark";
+        const angle = Math.random() * 360;
+        const dist  = 80 + Math.random() * 140;
+        s.style.cssText = `
+          left: 50%; top: 45%;
+          --tx: ${Math.cos(angle * Math.PI/180) * dist}px;
+          --ty: ${Math.sin(angle * Math.PI/180) * dist}px;
+          background: ${colours[Math.floor(Math.random()*colours.length)]};
+          width: ${4 + Math.random()*8}px;
+          height: ${4 + Math.random()*8}px;
+          animation-delay: ${Math.random()*0.2}s;
+          animation-duration: ${0.6 + Math.random()*0.5}s;
+        `;
+        sparksDiv.appendChild(s);
+      }
+      setTimeout(() => sparksDiv.innerHTML = "", 1200);
+    }
+
+    heartBtn.addEventListener("click", () => {
+      if (heartBtn.dataset.clicked) return;
+      heartBtn.dataset.clicked = "1";
+      spawnSparks();
+      heartBtn.classList.add("heart-opening");
+      setTimeout(() => {
+        screenHeart.classList.add("fade-exit");
+        setTimeout(() => {
+          showScreen(screenDash);
+          initDashboard();
+        }, 600);
+      }, 900);
+    });
+
+    // ══════════════════════════════════════════════════════════════════════
+    //  DASHBOARD INIT
+    // ══════════════════════════════════════════════════════════════════════
+    function initDashboard() {
+      startTimers();
+      initGallery();
+      initNotes();
+      document.getElementById("footer-year").textContent = new Date().getFullYear();
+    }
+
+    // ══════════════════════════════════════════════════════════════════════
+    //  TIMERS
+    // ══════════════════════════════════════════════════════════════════════
+    function pad(n) { return String(n).padStart(2, "0"); }
+
+    function timeSince(date) {
+      const diff = Date.now() - date.getTime();
+      const totalSecs = Math.max(0, Math.floor(diff / 1000));
+      const secs  = totalSecs % 60;
+      const mins  = Math.floor(totalSecs / 60) % 60;
+      const hrs   = Math.floor(totalSecs / 3600) % 24;
+      const days  = Math.floor(totalSecs / 86400);
+      return { days, hrs, mins, secs };
+    }
+
+    function updateTimer(prefix, date) {
+      const { days, hrs, mins, secs } = timeSince(date);
+      document.getElementById(`${prefix}-d`).textContent = days;
+      document.getElementById(`${prefix}-h`).textContent = pad(hrs);
+      document.getElementById(`${prefix}-m`).textContent = pad(mins);
+      document.getElementById(`${prefix}-s`).textContent = pad(secs);
+    }
+
+    function startTimers() {
+      const dateMet  = new Date("2026-07-21T00:00:00");
+      const dateLove = new Date("2026-08-17T00:00:00");
+
+      updateTimer("met",  dateMet);
+      updateTimer("love", dateLove);
+      setInterval(() => {
+        updateTimer("met",  dateMet);
+        updateTimer("love", dateLove);
+      }, 1000);
+    }
+
+    // ══════════════════════════════════════════════════════════════════════
+    //  GALLERY — Firebase Storage
+    // ══════════════════════════════════════════════════════════════════════
+    const galleryGrid  = document.getElementById("gallery-grid");
+    const galleryEmpty = document.getElementById("gallery-empty");
+    const uploadBtn    = document.getElementById("upload-btn");
+    const fileInput    = document.getElementById("file-input");
+
+    // Local demo storage (used when Firebase is not configured)
+    const localPhotos = JSON.parse(localStorage.getItem("lw_photos") || "[]");
+
+    function addImageToGrid(url, name) {
+      galleryEmpty.style.display = "none";
+      const item = document.createElement("div");
+      item.className = "gallery-item";
+      item.setAttribute("role","listitem");
+      item.innerHTML = `<img src="${url}" alt="${name || 'Our memory'}" loading="lazy" />
+                        <div class="gallery-overlay"><span>💕</span></div>`;
+      galleryGrid.prepend(item);
+      requestAnimationFrame(() => item.classList.add("gallery-item--visible"));
+    }
+
+    function uploadToFirebase(file) {
+      const path   = `gallery/${Date.now()}_${file.name}`;
+      const sRef   = storageRef(storage, path);
+      const task   = uploadBytesResumable(sRef, file);
+
+      // Show a progress placeholder
+      const placeholder = document.createElement("div");
+      placeholder.className = "gallery-item gallery-item--uploading";
+      placeholder.innerHTML = `<div class="upload-progress"><div class="upload-spinner"></div><span>Uploading…</span></div>`;
+      galleryGrid.prepend(placeholder);
+      galleryEmpty.style.display = "none";
+
+      task.on("state_changed",
+        null,
+        (err) => {
+          placeholder.remove();
+          alert("Upload failed 😢 " + err.message);
+        },
+        async () => {
+          const url = await getDownloadURL(task.snapshot.ref);
+          placeholder.remove();
+          // Save URL to Firestore so it persists
+          await addDoc(collection(db, "gallery"), { url, name: file.name, createdAt: serverTimestamp() });
+          addImageToGrid(url, file.name);
+        }
+      );
+    }
+
+    function initGallery() {
+      if (firebaseReady) {
+        // Load existing photos from Firestore
+        const q = query(collection(db, "gallery"), orderBy("createdAt", "desc"));
+        onSnapshot(q, (snap) => {
+          // Clear and re-render on first load
+          if (!galleryGrid.dataset.loaded) {
+            galleryGrid.dataset.loaded = "1";
+            snap.forEach(doc => addImageToGrid(doc.data().url, doc.data().name));
+          }
+        });
+
+        uploadBtn.addEventListener("click", () => fileInput.click());
+        fileInput.addEventListener("change", () => {
+          Array.from(fileInput.files).forEach(uploadToFirebase);
+          fileInput.value = "";
+        });
+      } else {
+        // ── DEMO mode (localStorage) ──────────────────────────────────────
+        localPhotos.forEach(p => addImageToGrid(p.url, p.name));
+
+        uploadBtn.addEventListener("click", () => fileInput.click());
+        fileInput.addEventListener("change", () => {
+          Array.from(fileInput.files).forEach(file => {
+            const reader = new FileReader();
+            reader.onload = e => {
+              const url = e.target.result;
+              localPhotos.unshift({ url, name: file.name });
+              localStorage.setItem("lw_photos", JSON.stringify(localPhotos.slice(0, 40)));
+              addImageToGrid(url, file.name);
+            };
+            reader.readAsDataURL(file);
+          });
+          fileInput.value = "";
+        });
+      }
+    }
+
+    // ══════════════════════════════════════════════════════════════════════
+    //  LOVE NOTES — Firestore
+    // ══════════════════════════════════════════════════════════════════════
+    const notesList   = document.getElementById("notes-list");
+    const noteText    = document.getElementById("note-text");
+    const noteBtn     = document.getElementById("note-btn");
+    const charCount   = document.getElementById("note-char-count");
+    const notesLoading= document.getElementById("notes-loading");
+
+    const noteColours = [
+      "#fff0f5","#fce4ec","#fdf6e3","#f3e5f5","#e8f5e9","#fff3e0"
+    ];
+
+    function buildNoteCard(data) {
+      const card = document.createElement("div");
+      card.className = "note-card";
+      card.setAttribute("role","listitem");
+      const colour = noteColours[Math.abs(data.text.charCodeAt(0)) % noteColours.length];
+      card.style.background = colour;
+      const date = data.createdAt?.toDate ? data.createdAt.toDate() : new Date();
+      card.innerHTML = `
+        <p class="note-body">${escapeHtml(data.text)}</p>
+        <span class="note-meta">💌 ${formatDate(date)}</span>
+        <div class="note-pin" aria-hidden="true"></div>
+      `;
+      return card;
+    }
+
+    function escapeHtml(str) {
+      return str.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+    }
+
+    function formatDate(d) {
+      return d.toLocaleDateString("en-US", { month:"short", day:"numeric", year:"numeric" })
+           + " · "
+           + d.toLocaleTimeString("en-US", { hour:"2-digit", minute:"2-digit" });
+    }
+
+    async function postNote() {
+      const text = noteText.value.trim();
+      if (!text) return;
+      noteBtn.disabled = true;
+      noteBtn.textContent = "Posting…";
+
+      if (firebaseReady) {
+        try {
+          await addDoc(collection(db, "notes"), { text, createdAt: serverTimestamp() });
+          noteText.value = "";
+          charCount.textContent = "0 / 500";
+        } catch(e) { alert("Could not save note 😢 " + e.message); }
+      } else {
+        // Demo fallback
+        const localNotes = JSON.parse(localStorage.getItem("lw_notes") || "[]");
+        const note = { text, createdAt: new Date().toISOString() };
+        localNotes.unshift(note);
+        localStorage.setItem("lw_notes", JSON.stringify(localNotes));
+        const card = buildNoteCard({ text, createdAt: { toDate: () => new Date() } });
+        card.classList.add("note-new");
+        notesList.prepend(card);
+        noteText.value = "";
+        charCount.textContent = "0 / 500";
+      }
+
+      noteBtn.disabled = false;
+      noteBtn.textContent = "Post 💌";
+    }
+
+    function initNotes() {
+      // Char counter
+      noteText.addEventListener("input", () => {
+        charCount.textContent = `${noteText.value.length} / 500`;
+      });
+      noteBtn.addEventListener("click", postNote);
+      noteText.addEventListener("keydown", e => {
+        if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) postNote();
+      });
+
+      if (firebaseReady) {
+        const q = query(collection(db, "notes"), orderBy("createdAt", "desc"));
+        onSnapshot(q, (snap) => {
+          notesLoading.remove();
+          notesList.innerHTML = "";
+          if (snap.empty) {
+            notesList.innerHTML = `<p class="notes-empty">No notes yet — write the first one! 💕</p>`;
+            return;
+          }
+          snap.forEach(doc => {
+            const card = buildNoteCard(doc.data());
+            notesList.appendChild(card);
+          });
+        });
+      } else {
+        // Demo fallback
+        notesLoading.remove();
+        const localNotes = JSON.parse(localStorage.getItem("lw_notes") || "[]");
+        if (localNotes.length === 0) {
+          notesList.innerHTML = `<p class="notes-empty">No notes yet — write the first one! 💕</p>`;
+        } else {
+          localNotes.forEach(n => {
+            const card = buildNoteCard({ text: n.text, createdAt: { toDate: () => new Date(n.createdAt) } });
+            notesList.appendChild(card);
+          });
+        }
+      }
+    }
+
+    // ══════════════════════════════════════════════════════════════════════
+    //  FLOATING PARTICLES background
+    // ══════════════════════════════════════════════════════════════════════
+    const pContainer = document.getElementById("particles-container");
+    const emojis = ["🌸","💕","✨","💫","🌷","💗","🦋","⭐","🌺","💖"];
+
+    function spawnParticle() {
+      const el = document.createElement("span");
+      el.className = "bg-particle";
+      el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      el.style.cssText = `
+        left: ${Math.random()*100}vw;
+        font-size: ${12 + Math.random()*22}px;
+        animation-duration: ${8 + Math.random()*12}s;
+        animation-delay: ${Math.random()*6}s;
+        opacity: ${0.2 + Math.random()*0.5};
+      `;
+      pContainer.appendChild(el);
+      el.addEventListener("animationend", () => el.remove());
+    }
+
+    setInterval(spawnParticle, 1200);
+    // Seed a few immediately
+    for (let i = 0; i < 8; i++) spawnParticle();
+  </script>
+  <script src="app.js"></script>
+</body>
+</html>
